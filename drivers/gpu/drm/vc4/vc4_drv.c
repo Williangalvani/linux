@@ -277,6 +277,10 @@ static int vc4_drm_bind(struct device *dev)
 	if (ret)
 		return ret;
 
+	ret = drm_aperture_remove_framebuffers(false, "vc4drmfb");
+	if (ret)
+		goto unbind_all;
+
 	ret = component_bind_all(dev, drm);
 	if (ret)
 		return ret;
@@ -286,10 +290,6 @@ static int vc4_drm_bind(struct device *dev)
 		if (ret)
 			goto unbind_all;
 	}
-
-	ret = drm_aperture_remove_framebuffers(false, "vc4drmfb");
-	if (ret)
-		goto unbind_all;
 
 	ret = vc4_kms_load(drm);
 	if (ret < 0)

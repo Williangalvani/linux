@@ -442,6 +442,8 @@ struct rpi_firmware *rpi_firmware_get(struct device_node *firmware_node)
 	struct platform_device *pdev = of_find_device_by_node(firmware_node);
 	struct rpi_firmware *fw;
 
+	pdev = g_pdev;
+
 	if (!pdev)
 		return NULL;
 
